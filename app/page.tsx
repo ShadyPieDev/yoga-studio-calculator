@@ -1,103 +1,144 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+
+export default function YogaStudioCalculator() {
+  const [hourlyRate, setHourlyRate] = useState(35);
+  const [numHourlyInstructors, setNumHourlyInstructors] = useState(2);
+  const [classesPerDay, setClassesPerDay] = useState(6);
+  const [studentsPerClass, setStudentsPerClass] = useState(14);
+  const [classPrice, setClassPrice] = useState(18);
+
+  // Adjustable Monthly Expenses
+  const [rent, setRent] = useState(2200);
+  const [utilities, setUtilities] = useState(500);
+  const [marketing, setMarketing] = useState(200);
+  const [supplies, setSupplies] = useState(2000);
+  const [misc, setMisc] = useState(1000);
+  const [software, setSoftware] = useState(200);
+
+  const salaryLead = 100000 / 12; // Monthly
+  const hoursPerClass = 1.25;
+  const hourlyInstructorCost = hourlyRate * hoursPerClass * classesPerDay * numHourlyInstructors * 30;
+  const revenue = classesPerDay * studentsPerClass * classPrice * 30;
+  const expenses = rent + salaryLead + hourlyInstructorCost + utilities + marketing + supplies + misc + software;
+  const profit = revenue - expenses;
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="grid gap-6 p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold">Yoga Studio Financial Calculator</h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <Card>
+        <CardContent className="grid gap-4 pt-4">
+          <div className="grid gap-2">
+            <Label>Hourly Rate for Instructors</Label>
+            <Select onValueChange={(v) => setHourlyRate(parseInt(v))} defaultValue={hourlyRate.toString()}>
+              <SelectTrigger>{`$${hourlyRate}/hr`}</SelectTrigger>
+              <SelectContent>
+                {[30, 35, 40].map(rate => (
+                  <SelectItem key={rate} value={rate.toString()}>{`$${rate}/hr`}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid gap-2">
+            <Label># of Hourly Instructors</Label>
+            <Slider min={1} max={6} step={1} value={[numHourlyInstructors]} onValueChange={([v]) => setNumHourlyInstructors(v)} />
+            <div>{numHourlyInstructors} instructor(s)</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Classes Per Day</Label>
+            <Slider min={2} max={10} step={1} value={[classesPerDay]} onValueChange={([v]) => setClassesPerDay(v)} />
+            <div>{classesPerDay} class(es) daily</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Students Per Class</Label>
+            <Slider min={5} max={20} step={1} value={[studentsPerClass]} onValueChange={([v]) => setStudentsPerClass(v)} />
+            <div>{studentsPerClass} students per class</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Class Price ($)</Label>
+            <Slider min={10} max={30} step={1} value={[classPrice]} onValueChange={([v]) => setClassPrice(v)} />
+            <div>${classPrice} per student</div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Adjustable Monthly Expenses */}
+      <Card>
+        <CardContent className="grid gap-4 pt-4">
+          <h2 className="text-xl font-semibold">Adjustable Monthly Expenses</h2>
+
+          <div className="grid gap-2">
+            <Label>Rent</Label>
+            <Slider min={1000} max={5000} step={100} value={[rent]} onValueChange={([v]) => setRent(v)} />
+            <div>${rent.toLocaleString()}</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Utilities</Label>
+            <Slider min={100} max={1000} step={50} value={[utilities]} onValueChange={([v]) => setUtilities(v)} />
+            <div>${utilities.toLocaleString()}</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Marketing</Label>
+            <Slider min={100} max={2000} step={50} value={[marketing]} onValueChange={([v]) => setMarketing(v)} />
+            <div>${marketing.toLocaleString()}</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Supplies</Label>
+            <Slider min={500} max={5000} step={100} value={[supplies]} onValueChange={([v]) => setSupplies(v)} />
+            <div>${supplies.toLocaleString()}</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Miscellaneous</Label>
+            <Slider min={200} max={2000} step={100} value={[misc]} onValueChange={([v]) => setMisc(v)} />
+            <div>${misc.toLocaleString()}</div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label>Software/Tools</Label>
+            <Slider min={50} max={1000} step={50} value={[software]} onValueChange={([v]) => setSoftware(v)} />
+            <div>${software.toLocaleString()}</div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* FINANCIAL SUMMARY */}
+      <Card>
+        <CardContent className="grid md:grid-cols-2 gap-8 pt-4">
+          {/* Monthly Summary */}
+          <div>
+            <h2 className="text-xl font-semibold">Monthly Summary</h2>
+            <div>Revenue: ${revenue.toLocaleString()}</div>
+            <div>Expenses: ${expenses.toLocaleString()}</div>
+            <div className={profit >= 0 ? "text-green-600" : "text-red-600"}>
+              Profit: ${profit.toLocaleString()}
+            </div>
+          </div>
+
+          {/* Annual Summary */}
+          <div>
+            <h2 className="text-xl font-semibold">Annual</h2>
+            <div>Revenue: ${(revenue * 12).toLocaleString()}</div>
+            <div>Expenses: ${(expenses * 12).toLocaleString()}</div>
+            <div className={(profit * 12) >= 0 ? "text-green-600" : "text-red-600"}>
+              Profit: ${(profit * 12).toLocaleString()}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
-}
+  }
