@@ -8,17 +8,17 @@ import { Slider } from "@/components/ui/slider";
 
 export default function YogaStudioCalculator() {
   const [hourlyRate, setHourlyRate] = useState(35);
-  const [numHourlyInstructors, setNumHourlyInstructors] = useState(2);
-  const [classesPerDay, setClassesPerDay] = useState(6);
-  const [studentsPerClass, setStudentsPerClass] = useState(14);
-  const [classPrice, setClassPrice] = useState(18);
+  const [numHourlyInstructors, setNumHourlyInstructors] = useState(1);
+  const [classesPerDay, setClassesPerDay] = useState(5);
+  const [studentsPerClass, setStudentsPerClass] = useState(8);
+  const [classPrice, setClassPrice] = useState(25);
 
   // Adjustable Monthly Expenses
   const [rent, setRent] = useState(2200);
-  const [utilities, setUtilities] = useState(500);
-  const [marketing, setMarketing] = useState(200);
-  const [supplies, setSupplies] = useState(2000);
-  const [misc, setMisc] = useState(1000);
+  const [utilities, setUtilities] = useState(1000);
+  const [marketing, setMarketing] = useState(500);
+  const [supplies, setSupplies] = useState(500);
+  const [misc, setMisc] = useState(500);
   const [software, setSoftware] = useState(200);
 
   const salaryLead = 100000 / 12; // Monthly
@@ -48,7 +48,7 @@ export default function YogaStudioCalculator() {
 
           <div className="grid gap-2">
             <Label># of Hourly Instructors</Label>
-            <Slider min={1} max={6} step={1} value={[numHourlyInstructors]} onValueChange={([v]) => setNumHourlyInstructors(v)} />
+            <Slider min={0} max={6} step={1} value={[numHourlyInstructors]} onValueChange={([v]) => setNumHourlyInstructors(v)} />
             <div>{numHourlyInstructors} instructor(s)</div>
           </div>
 
@@ -66,7 +66,7 @@ export default function YogaStudioCalculator() {
 
           <div className="grid gap-2">
             <Label>Class Price ($)</Label>
-            <Slider min={10} max={30} step={1} value={[classPrice]} onValueChange={([v]) => setClassPrice(v)} />
+            <Slider min={25} max={40} step={1} value={[classPrice]} onValueChange={([v]) => setClassPrice(v)} />
             <div>${classPrice} per student</div>
           </div>
         </CardContent>
@@ -79,37 +79,37 @@ export default function YogaStudioCalculator() {
 
           <div className="grid gap-2">
             <Label>Rent</Label>
-            <Slider min={1000} max={5000} step={100} value={[rent]} onValueChange={([v]) => setRent(v)} />
+            <Slider min={0} max={4000} step={100} value={[rent]} onValueChange={([v]) => setRent(v)} />
             <div>${rent.toLocaleString()}</div>
           </div>
 
           <div className="grid gap-2">
             <Label>Utilities</Label>
-            <Slider min={100} max={1000} step={50} value={[utilities]} onValueChange={([v]) => setUtilities(v)} />
+            <Slider min={0} max={1000} step={50} value={[utilities]} onValueChange={([v]) => setUtilities(v)} />
             <div>${utilities.toLocaleString()}</div>
           </div>
 
           <div className="grid gap-2">
             <Label>Marketing</Label>
-            <Slider min={100} max={2000} step={50} value={[marketing]} onValueChange={([v]) => setMarketing(v)} />
+            <Slider min={0} max={2000} step={50} value={[marketing]} onValueChange={([v]) => setMarketing(v)} />
             <div>${marketing.toLocaleString()}</div>
           </div>
 
           <div className="grid gap-2">
             <Label>Supplies</Label>
-            <Slider min={500} max={5000} step={100} value={[supplies]} onValueChange={([v]) => setSupplies(v)} />
+            <Slider min={0} max={5000} step={100} value={[supplies]} onValueChange={([v]) => setSupplies(v)} />
             <div>${supplies.toLocaleString()}</div>
           </div>
 
           <div className="grid gap-2">
             <Label>Miscellaneous</Label>
-            <Slider min={200} max={2000} step={100} value={[misc]} onValueChange={([v]) => setMisc(v)} />
+            <Slider min={0} max={2000} step={100} value={[misc]} onValueChange={([v]) => setMisc(v)} />
             <div>${misc.toLocaleString()}</div>
           </div>
 
           <div className="grid gap-2">
             <Label>Software/Tools</Label>
-            <Slider min={50} max={1000} step={50} value={[software]} onValueChange={([v]) => setSoftware(v)} />
+            <Slider min={0} max={1000} step={50} value={[software]} onValueChange={([v]) => setSoftware(v)} />
             <div>${software.toLocaleString()}</div>
           </div>
         </CardContent>
